@@ -1,4 +1,6 @@
+Flask
 SpeechRecognition
 pyttsx3
 pyaudio
 tk
+flask-cors

@@ -31,7 +31,7 @@ def run_listen():
 
 # GUI setup
 root = tk.Tk()
-root.title("Smart Voice Assistant")
+root.title("AIVA – AI Voice Assistant")
 root.geometry("500x450")
 
 # Text area

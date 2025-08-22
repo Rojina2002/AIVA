@@ -13,35 +13,42 @@ def speak(text):
     engine.runAndWait()
 
 # Smart responses
-def smart_response(inp, append_text):
+def smart_response(inp, append_text, tts=True):
     inp_lower = inp.lower()
 
     if "hello" in inp_lower or "hi" in inp_lower:
-        speak("Hello! How are you today?")
         append_text("Assistant: Hello! How are you today?")
+        if tts:
+            speak("Hello! How are you today?")
     elif "how are you" in inp_lower:
-        speak("I am just a program, but I'm doing great! How about you?")
         append_text("Assistant: I am just a program, but I'm doing great! How about you?")
+        if tts:
+            speak("I am just a program, but I'm doing great! How about you?")
     elif "time" in inp_lower:
         now = datetime.datetime.now().strftime("%H:%M")
-        speak(f"The current time is {now}")
         append_text(f"Assistant: The current time is {now}")
+        if tts:
+            speak(f"The current time is {now}")
     elif "date" in inp_lower:
         today = datetime.datetime.now().strftime("%d %B %Y")
-        speak(f"Today's date is {today}")
         append_text(f"Assistant: Today's date is {today}")
+        if tts:
+            speak(f"Today's date is {today}")
     elif "play" in inp_lower or "song" in inp_lower or "gana" in inp_lower:
-        speak(f"Playing {inp} on YouTube")
-        append_text(f"Assistant: Playing {inp} on YouTube")
         query = inp.replace("play", "").replace("song", "").replace("gana", "").strip()
+        append_text(f"Assistant: Playing {query} on YouTube")
+        if tts:
+            speak(f"Playing {query} on YouTube")
         webbrowser.open(f"https://www.youtube.com/results?search_query={query}")
     elif inp_lower in ["stop", "exit", "quit"]:
-        speak("Goodbye! Have a great day.")
         append_text("Assistant: Goodbye! Have a great day.")
+        if tts:
+            speak("Goodbye! Have a great day.")
         return False
     else:
-        speak(f"You said: {inp}")
         append_text(f"You said: {inp}")
+        if tts:
+            speak(f"You said: {inp}")
     return True
 
 def get_response_from_text(inp):
