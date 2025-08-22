@@ -44,6 +44,19 @@ def smart_response(inp, append_text):
         append_text(f"You said: {inp}")
     return True
 
+def get_response_from_text(inp):
+    """
+    Returns assistant response as a list of strings instead of speaking.
+    This is for Flask + React integration.
+    """
+    responses = []
+
+    def capture(txt):
+        responses.append(txt)
+
+    smart_response(inp, capture)
+    return responses
+
 def listen_and_respond(append_text):
     speak("Hello! I am listening. Say stop to exit.")
     append_text("Assistant: Hello! I am listening. Say stop to exit.")
