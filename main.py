@@ -1,8 +1,8 @@
 import threading
 import tkinter as tk
 from tkinter import scrolledtext
-import speech_recognition as sr
-from assistant import speak, smart_response
+##import speech_recognition as sr
+from assistant import listen_and_respond
 
 speech = sr.Recognizer()
 
@@ -14,8 +14,10 @@ def append_text(text):
     text_area.config(state='disabled')
 
 # Listening loop
-def listen():
-    speak("Hello! I am listening. Say stop to exit.")
+def run_listen():
+    listen_and_respond(append_text)
+
+    '''speak("Hello! I am listening. Say stop to exit.")
     append_text("Assistant: Hello! I am listening. Say stop to exit.")
     running = True
     while running:
@@ -36,7 +38,7 @@ def listen():
         except KeyboardInterrupt:
             speak("Program interrupted. Goodbye!")
             append_text("Assistant: Program interrupted. Goodbye!")
-            break
+            break'''
 
 # GUI setup
 root = tk.Tk()
@@ -47,6 +49,6 @@ text_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, state='disabled', font
 text_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
 # Start listening thread
-threading.Thread(target=listen, daemon=True).start()
+threading.Thread(target=run_listen, daemon=True).start()
 
 root.mainloop()

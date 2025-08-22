@@ -43,3 +43,27 @@ def smart_response(inp, append_text):
         speak(f"You said: {inp}")
         append_text(f"You said: {inp}")
     return True
+
+def listen_and_respond(append_text):
+    speak("Hello! I am listening. Say stop to exit.")
+    append_text("Assistant: Hello! I am listening. Say stop to exit.")
+    running = True
+    while running:
+        try:
+            with sr.Microphone() as source:
+                speech.adjust_for_ambient_noise(source, duration=0.5)
+                append_text("Listening...")
+                audio = speech.listen(source)
+                inp = speech.recognize_google(audio)
+                append_text(f"You said: {inp}")
+                running = smart_response(inp, append_text)
+        except sr.UnknownValueError:
+            speak("Sorry, I could not understand that. Please try again.")
+            append_text("Assistant: Sorry, I could not understand that. Please try again.")
+        except sr.RequestError:
+            speak("Network error. Please check your internet connection.")
+            append_text("Assistant: Network error. Please check your internet connection.")
+        except KeyboardInterrupt:
+            speak("Program interrupted. Goodbye!")
+            append_text("Assistant: Program interrupted. Goodbye!")
+            break
