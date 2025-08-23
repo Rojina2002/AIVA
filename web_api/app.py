@@ -3,10 +3,17 @@ from flask_cors import CORS
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from assistant import smart_response
+from assistant import smart_response, get_response_from_text
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route("/api/ask", methods=["POST"])
+def ask():
+    data = request.json
+    user_input = data.get("message", "")
+    responses = get_response_from_text(user_input)
+    return jsonify({"responses": responses})
 
 @app.route("/api/voice", methods=["POST"])
 def voice():
